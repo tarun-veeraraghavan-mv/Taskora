@@ -1,9 +1,7 @@
-import { useContext, useEffect, useState } from "react";
-import { UserContext } from "../../contexts/UserContext";
 import styled from "styled-components";
-import axios from "axios";
-import { profile } from "../../lib/data-service";
-import { getProfile } from "../../../../server/controller/profileController";
+import { useUser } from "../auth/useUser";
+import { useUserProfile } from "./useUserProfile";
+import { useEffect } from "react";
 
 const StyledProfileImage = styled.img`
   height: 100px;
@@ -12,40 +10,34 @@ const StyledProfileImage = styled.img`
 `;
 
 function Profile() {
-  const { user } = useContext(UserContext);
-  const [additionalDeatils, setAddDetails] = useState(null);
-  console.log(user);
+  const { user, isLoading, error } = useUser();
 
-  async function fetchProfile() {
-    const userProfile = await axios.get(
-      `http://127.0.0.1:3000/api/v1/profile/${user.user._id}`
-    );
-    console.log(userProfile);
-  }
+  const {
+    profile,
+    isLoading: isProfiling,
+    error: profileError,
+  } = useUserProfile(user?._id);
 
-  if (user?.user?.loading) return <p>Loading...</p>;
+  if (isLoading || isProfiling) return <p>Loading...</p>;
+
+  if (error || profileError) alert(error);
 
   return (
     <div>
-      <StyledProfileImage src={user?.user?.avatar} />
-      <div>
-        <p>{user?.user?.name}</p>
-        <p>{user?.user?.email}</p>
+      <StyledProfileImage src={user.avatar} />
 
+      <button>Fetch more details</button>
+      <div>
+        <p>{user.name}</p>
+        <p>{user.email}</p>
         <hr />
 
-        <button onClick={fetchProfile}>Get more details</button>
-
-        {additionalDeatils && (
-          <>
-            <p>{additionalDeatils?.location}</p>
-            {/* <p>{currentProfile?.dateOfBirth}</p>
-            <p>{currentProfile?.gender}</p>
-            <p>{currentProfile?.currentCollege}</p>
-            <p>{currentProfile?.major}</p>
-            <p>{currentProfile?.minor}</p> */}
-          </>
-        )}
+        <p>{profile.major}</p>
+        <p>{profile.minor}</p>
+        <p>{profile.location}</p>
+        <p>{profile.gender}</p>
+        <p>{profile.dateOfBirth}</p>
+        <p>{profile.gender}</p>
       </div>
     </div>
   );

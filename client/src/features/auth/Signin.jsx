@@ -3,41 +3,27 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 import { Button, Input, Label, Signup } from "../../components/Form";
+import { useSignin } from "./useSignin";
 
 function Signin() {
   const [name, setName] = useState("");
   const [avatar, setAvatar] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const navigate = useNavigate();
 
-  async function signin(e) {
+  const { signin, isSigningIn } = useSignin();
+
+  function handleSignin(e) {
     e.preventDefault();
-    try {
-      const newUser = await axios.post(
-        "http://127.0.0.1:3000/api/v1/users/signin",
-        {
-          name,
-          avatar,
-          email,
-          password,
-        }
-      );
 
-      localStorage.setItem("token", newUser.data.token);
-
-      navigate("/profile");
-    } catch (e) {
-      console.log(e);
-      if (e?.response?.data?.message) {
-        alert(e?.response?.data?.message);
-      }
-    }
+    signin({ name, avatar, email, password });
   }
+
+  if (isSigningIn) return <p>Loading...</p>;
 
   return (
     <div>
-      <Signup onSubmit={signin}>
+      <Signup onSubmit={handleSignin}>
         <h1>Create your account!</h1>
         <div>
           <Label htmlFor="name">Name</Label>

@@ -1,15 +1,23 @@
 import { useContext } from "react";
 import { UserContext } from "../contexts/UserContext";
 import { NavLink } from "react-router-dom";
+import { useUser } from "../features/auth/useUser";
 
 function Home() {
-  const { user } = useContext(UserContext);
+  const { user, isLoading, error } = useUser();
 
-  console.log(user);
+  if (isLoading) return <p>Loading...</p>;
 
-  if (user.loading) return <p>Loading...</p>;
+  if (error) alert(error);
 
-  return <div>You are in home pahe</div>;
+  console.log(user._id);
+
+  return (
+    <div>
+      <h1>Your user</h1>
+      <p>{user.name}</p>
+    </div>
+  );
 }
 
 export default Home;

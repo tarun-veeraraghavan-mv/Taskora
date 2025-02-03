@@ -4,6 +4,8 @@ import { UserContext } from "../../contexts/UserContext";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { useUser } from "../auth/useUser";
+import { useCreateProfile } from "./useCreateProfile";
 
 const Select = styled.select`
   font-size: 16px;
@@ -12,42 +14,34 @@ const Select = styled.select`
 `;
 
 function ProfileForm() {
-  const { user } = useContext(UserContext);
+  const { user, isLoading, error } = useUser();
   console.log(user);
-  const navigate = useNavigate();
-  console.log(user._id);
+  const { createProfile, isCreating } = useCreateProfile();
+
+  console.log(user?._id);
 
   async function onSubmit(e) {
-    try {
-      e.preventDefault();
+    e.preventDefault();
 
-      const formData = new FormData(e.target);
-      const data = Object.fromEntries(formData);
+    const formData = new FormData(e.target);
+    const data = Object.fromEntries(formData);
 
-      console.log("DATA", data);
+    console.log("DATA", data);
 
-      const finalData = {
-        ...data,
-        userId: user?.user?._id,
-        age: Number(data.age),
-      };
+    const finalData = {
+      ...data,
+      userId: user?._id,
+      age: Number(data.age),
+    };
 
-      console.log("FINAL DATA", finalData);
+    console.log("FINAL DATA", finalData);
 
-      const createdUser = await axios.post(
-        "http://127.0.0.1:3000/api/v1/profile",
-        finalData
-      );
-
-      console.log(createdUser);
-      navigate("/app/home");
-    } catch (e) {
-      console.log(e);
-      if (e?.response?.data?.message) {
-        alert(e?.response?.data?.message);
-      }
-    }
+    createProfile(finalData);
   }
+
+  if (isCreating) return <p>Loading...</p>;
+
+  if (error) alert(error);
 
   return (
     <div>
