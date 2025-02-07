@@ -1,13 +1,20 @@
 import styled from "styled-components";
 import { useUser } from "../auth/useUser";
 import { useUserProfile } from "./useUserProfile";
-import { useEffect } from "react";
 
 const StyledProfileImage = styled.img`
   height: 100px;
   width: 100px;
   border-radius: 50%;
 `;
+
+const StyledProfileLayout = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 32px;
+`
 
 function Profile() {
   const { user, isLoading, error } = useUser();
@@ -23,15 +30,14 @@ function Profile() {
   if (error || profileError) alert(error);
 
   return (
-    <div>
-      <StyledProfileImage src={user.avatar} />
+    <StyledProfileLayout>
+      <div>
+        <StyledProfileImage src={user.avatar} />
+      </div>
 
-      <button>Fetch more details</button>
       <div>
         <p>{user.name}</p>
         <p>{user.email}</p>
-        <hr />
-
         <p>{profile.major}</p>
         <p>{profile.minor}</p>
         <p>{profile.location}</p>
@@ -39,7 +45,7 @@ function Profile() {
         <p>{profile.dateOfBirth}</p>
         <p>{profile.gender}</p>
       </div>
-    </div>
+    </StyledProfileLayout>
   );
 }
 

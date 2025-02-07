@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Button, Input, Label, Signup } from "../../components/Form";
+import { Button, Form, Input, Label } from "../../components/Form";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -21,7 +21,6 @@ function Login() {
       );
 
       localStorage.setItem("token", newUser.data.token);
-      
 
       navigate("/app/home");
     } catch (e) {
@@ -34,7 +33,7 @@ function Login() {
 
   return (
     <div>
-      <Signup onSubmit={login}>
+      <Form onSubmit={login}>
         <h1>Log in to your account</h1>
         <div>
           <Label htmlFor="email">Email</Label>
@@ -55,7 +54,7 @@ function Login() {
           />
         </div>
         <Button>Log in</Button>
-      </Signup>
+      </Form>
     </div>
   );
 }

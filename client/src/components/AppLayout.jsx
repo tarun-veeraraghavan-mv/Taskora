@@ -4,6 +4,8 @@ import styled from "styled-components";
 const StyledHeader = styled.div`
   padding: 32px 0;
   background-color: lightgray;
+  position: sticky;
+  top: 0;
 `;
 
 const StyledNav = styled.ul`

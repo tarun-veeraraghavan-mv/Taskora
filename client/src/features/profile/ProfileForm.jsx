@@ -1,17 +1,6 @@
-import { useContext } from "react";
-import { Button, Input, Label, Signup } from "../../components/Form";
-import { UserContext } from "../../contexts/UserContext";
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
-import styled from "styled-components";
+import { Button, Form, Input, Label, Select } from "../../components/Form";
 import { useUser } from "../auth/useUser";
 import { useCreateProfile } from "./useCreateProfile";
-
-const Select = styled.select`
-  font-size: 16px;
-  width: 100%;
-  padding: 8px 16px;
-`;
 
 function ProfileForm() {
   const { user, isLoading, error } = useUser();
@@ -20,7 +9,7 @@ function ProfileForm() {
 
   console.log(user?._id);
 
-  async function onSubmit(e) {
+  function onSubmit(e) {
     e.preventDefault();
 
     const formData = new FormData(e.target);
@@ -45,7 +34,7 @@ function ProfileForm() {
 
   return (
     <div>
-      <Signup onSubmit={onSubmit}>
+      <Form onSubmit={onSubmit} centered={true}>
         <h1>Finish up your profile</h1>
         <div>
           <Label>Your date of birth</Label>
@@ -75,7 +64,7 @@ function ProfileForm() {
           <Input placeholder="Minor" name="minor" />
         </div>
         <Button>Create your profile</Button>
-      </Signup>
+      </Form>
     </div>
   );
 }

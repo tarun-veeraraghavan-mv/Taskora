@@ -11,6 +11,7 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import AppLayout from "./components/AppLayout";
 import ProfileForm from "./features/profile/ProfileForm";
 import Profile from "./features/profile/Profile";
+import Course from "./features/courses/Course";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -40,6 +41,7 @@ function App() {
             <Route path="/app" element={<AppLayout />}>
               <Route path="home" element={<Home />} />
               <Route path="me" element={<Profile />} />
+              <Route path="course" element={<Course />} />
             </Route>
           </Route>
         </Routes>

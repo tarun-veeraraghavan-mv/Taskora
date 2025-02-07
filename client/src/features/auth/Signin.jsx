@@ -1,8 +1,6 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import axios from "axios";
 
-import { Button, Input, Label, Signup } from "../../components/Form";
+import { Button, Form, Input, Label } from "../../components/Form";
 import { useSignin } from "./useSignin";
 
 function Signin() {
@@ -23,7 +21,7 @@ function Signin() {
 
   return (
     <div>
-      <Signup onSubmit={handleSignin}>
+      <Form onSubmit={handleSignin}>
         <h1>Create your account!</h1>
         <div>
           <Label htmlFor="name">Name</Label>
@@ -66,7 +64,7 @@ function Signin() {
           />
         </div>
         <Button>Create account</Button>
-      </Signup>
+      </Form>
     </div>
   );
 }

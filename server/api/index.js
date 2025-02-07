@@ -7,6 +7,7 @@ import cors from "cors";
 import { globalErrorHandler } from "../controller/globalErrorHandler.js";
 import authRouter from "../routes/authRouter.js";
 import profileRouter from "../routes/profileRoute.js";
+import courseRouter from "../routes/courseRouter.js";
 
 mongoose
   .connect(
@@ -33,6 +34,7 @@ app.get("/", (req, res) => {
 
 app.use("/api/v1/users", authRouter);
 app.use("/api/v1/profile", profileRouter);
+app.use("/api/v1/course", courseRouter);
 
 app.use(globalErrorHandler);
 

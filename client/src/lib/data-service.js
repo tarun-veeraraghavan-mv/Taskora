@@ -82,3 +82,52 @@ export async function getProfile(userId) {
     }
   }
 }
+
+// NOTE: COURSES
+
+export async function getAllCourses(userId) {
+  try {
+    const allCourses = await axios.get(
+      `http://127.0.0.1:3000/api/v1/course/${userId}`
+    );
+
+    return allCourses.data.data.allCourses;
+  } catch (e) {
+    console.log(e);
+    if (e?.response?.data?.message) {
+      alert(e?.response?.data?.message);
+    }
+  }
+}
+
+export async function createCourse(formData) {
+  try {
+    const newCourse = await axios.post(
+      "http://127.0.0.1:3000/api/v1/course",
+      formData
+    );
+
+    return newCourse.data.data.newCourse;
+  } catch (e) {
+    console.log(e);
+    if (e?.response?.data?.message) {
+      alert(e?.response?.data?.message);
+    }
+  }
+}
+
+export async function deleteCourse(courseId) {
+  console.log(courseId);
+  try {
+    const deletedCourse = await axios.delete(
+      `http://127.0.0.1:3000/api/v1/course/${courseId}`
+    );
+
+    return deletedCourse.data.data.deletedCourse;
+  } catch (e) {
+    console.log(e);
+    if (e?.response?.data?.message) {
+      alert(e?.response?.data?.message);
+    }
+  }
+}
