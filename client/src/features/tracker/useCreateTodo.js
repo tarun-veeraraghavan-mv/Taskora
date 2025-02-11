@@ -5,7 +5,7 @@ export function useCreateTodo() {
   const queryClient = useQueryClient();
 
   const { mutate: createTodo, isLoading: isCreatingTodo } = useMutation({
-    mutationFn: ({ id, data }) => createTodoApi(id, data),
+    mutationFn: (data) => createTodoApi(data),
     onSuccess: () => {
       alert("Todo was created");
       queryClient.invalidateQueries({
