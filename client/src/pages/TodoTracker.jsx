@@ -1,10 +1,11 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { useUser } from "../features/auth/useUser";
 import { useCourses } from "../features/courses/useCourses";
-import { Button, Form } from "../components/Form";
+import { Button, Form, Input, Label } from "../components/Form";
 import { useTodos } from "../features/tracker/useTodos";
 import { useCreateTodo } from "../features/tracker/useCreateTodo";
 import { useDeleteTodo } from "../features/tracker/useDeleteTodo";
+import { formatDate } from "../util/helpers/formatDate";
 
 const CenterDiv = styled.div`
   max-width: 1200px;
@@ -13,9 +14,24 @@ const CenterDiv = styled.div`
   gap: 32px;
 `;
 
-const TodoList = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+const TodoHeader = styled.div`
+  padding: 10px;
+
+  ${(props) =>
+    props.color &&
+    css`
+      background-color: ${props.color};
+    `}
+`;
+
+const TodoTask = styled.li`
+  background-color: aliceblue;
+`;
+
+const TaskList = styled.ul`
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 `;
 
 const StyledTodoList = styled.ul`
@@ -54,29 +70,44 @@ function TodoTracker() {
       <StyledTodoList>
         {courses?.map((course) => (
           <li key={course?._id}>
-            <p>Semester {course?.semesterNumber}</p>
-            <h3>{course?.courseTitle}</h3>
+            <TodoHeader color={course.semesterColor}>
+              <p>Semester {course?.semesterNumber}</p>
+              <h3>{course?.courseTitle}</h3>
+            </TodoHeader>
 
-            <ul>
-              {todos
-                ?.filter((todo) => todo?.courseId === course?._id)
-                .map((todo) => (
-                  <li key={todo?._id}>
-                    <p>{todo.name}</p>
-                    <button onClick={() => deletedTodo(todo?._id)}>
-                      Delete
-                    </button>
-                  </li>
-                ))}
-            </ul>
             <Form onSubmit={handleAddTodo}>
               <div>
-                <label>Task name</label>
-                <input type="text" placeholder="Task" name="name" />
-                <input type="hidden" value={course?._id} name="courseId" />
+                <div>
+                  <Label>Task name</Label>
+                  <Input type="text" placeholder="Task" name="name" />
+                </div>
+                <Input type="hidden" value={course?._id} name="courseId" />
+                <div>
+                  <Label>Due date</Label>
+                  <Input type="date" name="dueDate" />
+                </div>
+                <div>
+                  <Label>Remarks</Label>
+                  <Input type="text" name="remarks" />
+                </div>
               </div>
               <Button>Add a task</Button>
             </Form>
+
+            <TaskList>
+              {todos
+                ?.filter((todo) => todo?.courseId === course?._id)
+                .map((todo) => (
+                  <TodoTask key={todo?._id}>
+                    <p>{todo.name}</p>
+                    <p>{formatDate(todo.dueDate)}</p>
+                    <p>Remarks: {todo?.remarks}</p>
+                    <button onClick={() => deletedTodo(todo?._id)}>
+                      Delete
+                    </button>
+                  </TodoTask>
+                ))}
+            </TaskList>
           </li>
         ))}
       </StyledTodoList>

@@ -5,13 +5,7 @@ import { StyledFlex } from "../../components/Flex";
 import { Heading } from "../../components/Heading";
 import { StyledLink } from "../../components/StyledLink";
 import { Bold } from "../../components/Typography";
-
-const formatDate = (date) =>
-  new Intl.DateTimeFormat("en", {
-    day: "numeric",
-    month: "long",
-    year: "numeric",
-  }).format(new Date(date));
+import { formatDate } from "../../util/helpers/formatDate";
 
 const StyledCourseList = styled.ul`
   display: grid;
@@ -66,7 +60,7 @@ const StyledSelection = styled.select`
   font-size: 14px;
   padding: 10px;
   width: 170px;
-`
+`;
 
 function CourseList({ courses, deleteCourse }) {
   function handleDeleteCourse(id) {
@@ -75,7 +69,7 @@ function CourseList({ courses, deleteCourse }) {
   }
 
   const [input, setInput] = useState("");
-  const [select, setSelect] = useState(null)
+  const [select, setSelect] = useState(null);
 
   let filteredCourses =
     input === ""
@@ -84,11 +78,17 @@ function CourseList({ courses, deleteCourse }) {
           course.courseTitle.toLowerCase().includes(input.toLowerCase())
         );
 
-        console.log([...new Set(courses?.map(course => course.semesterNumber))].sort((a,b) => a - b))
+  console.log(
+    [...new Set(courses?.map((course) => course.semesterNumber))].sort(
+      (a, b) => a - b
+    )
+  );
 
-  let sortedAndFilteredCourse = isNaN(select) ? filteredCourses : courses?.filter(course => course.semesterNumber === select)
+  let sortedAndFilteredCourse = isNaN(select)
+    ? filteredCourses
+    : courses?.filter((course) => course.semesterNumber === select);
 
-  console.log(sortedAndFilteredCourse)
+  console.log(sortedAndFilteredCourse);
 
   return (
     <div>
@@ -106,13 +106,19 @@ function CourseList({ courses, deleteCourse }) {
             </p>
           )}
         </StyledFlex>
-        <StyledSelection onChange={e => setSelect(Number(e.target.value))}>
-        <option>Sort by semester</option>
-          {[...new Set(courses?.map(course => course.semesterNumber))].sort((a,b) => Number(a) - Number(b)).map(no => <>
-           <option key={no} value={Number(no)}>Semester {no}</option>
-          </>)}
+        <StyledSelection onChange={(e) => setSelect(Number(e.target.value))}>
+          <option>Sort by semester</option>
+          {[...new Set(courses?.map((course) => course.semesterNumber))]
+            .sort((a, b) => Number(a) - Number(b))
+            .map((no) => (
+              <>
+                <option key={no} value={Number(no)}>
+                  Semester {no}
+                </option>
+              </>
+            ))}
         </StyledSelection>
-        
+
         <StyledLink to="/app/course-add" color="green">
           + Add Course
         </StyledLink>
@@ -135,7 +141,19 @@ function CourseList({ courses, deleteCourse }) {
                 <p>📊 Course progress: {course?.progress}</p>
                 <p>⭐️ Course grade: {course.grade}</p>
                 <p>Course difficulty: {course.difficulty}</p>
-                <ul>{course?.links?.trim().split('|').map((link, i) => <li key={i}>Link {i + 1}: <a href={link} target="_blank">{link}</a></li>)}</ul>
+                <ul>
+                  {course?.links
+                    ?.trim()
+                    .split("|")
+                    .map((link, i) => (
+                      <li key={i}>
+                        Link {i + 1}:{" "}
+                        <a href={link} target="_blank">
+                          {link}
+                        </a>
+                      </li>
+                    ))}
+                </ul>
               </MainContent>
 
               <StyledFlex>

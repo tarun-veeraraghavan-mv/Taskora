@@ -32,3 +32,7 @@ export const deleteTodo = catchAsync(async (req, res) => {
     },
   });
 });
+
+export const markTodoCompleted = catchAsync(async (req, res) => {
+  const completedTodo = await Todo.findByIdAndUpdate(req.params.id, req.body);
+});
