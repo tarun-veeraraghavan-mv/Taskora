@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 dotenv.config({ path: "../../server/api/config.env" });
 import cors from "cors";
 import rateLimit from "express-rate-limit";
+import helmet from "helmet";
 
 import { globalErrorHandler } from "../controller/globalErrorHandler.js";
 import authRouter from "../routes/authRouter.js";
@@ -29,6 +30,8 @@ const limiter = rateLimit({
   windowMs: 1000 * 60 * 60,
   message: "Too many requests from this IP, please try again",
 });
+app.use("/api", limiter);
+app.use(helmet());
 
 app.use((req, res, next) => {
   console.log(req.headers);
