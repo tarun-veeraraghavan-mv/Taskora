@@ -5,6 +5,7 @@ dotenv.config({ path: "../../server/api/config.env" });
 import cors from "cors";
 import rateLimit from "express-rate-limit";
 import helmet from "helmet";
+import mongoSanitize from "express-mongo-sanitize";
 
 import { globalErrorHandler } from "../controller/globalErrorHandler.js";
 import authRouter from "../routes/authRouter.js";
@@ -32,6 +33,7 @@ const limiter = rateLimit({
 });
 app.use("/api", limiter);
 app.use(helmet());
+app.use(mongoSanitize());
 
 app.use((req, res, next) => {
   console.log(req.headers);
