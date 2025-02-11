@@ -2,6 +2,7 @@ import { useState } from "react";
 
 import { Button, Form, Input, Label } from "../../components/Form";
 import { useSignin } from "./useSignin";
+import { Link, useNavigate } from "react-router-dom";
 
 function Signin() {
   const [name, setName] = useState("");
@@ -11,10 +12,15 @@ function Signin() {
 
   const { signin, isSigningIn } = useSignin();
 
+  const navigate = useNavigate()
+
   function handleSignin(e) {
     e.preventDefault();
 
     signin({ name, avatar, email, password });
+
+    navigate('/profile')
+
   }
 
   if (isSigningIn) return <p>Loading...</p>;
@@ -65,6 +71,7 @@ function Signin() {
         </div>
         <Button>Create account</Button>
       </Form>
+      <Link to='/login'>Already have an account? Log in</Link>
     </div>
   );
 }

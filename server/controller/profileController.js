@@ -20,3 +20,20 @@ export const getProfile = catchAsync(async (req, res) => {
     },
   });
 });
+
+export const updateProfile = catchAsync(async (req, res) => {
+  const updatedProfile = await Profile.findByIdAndUpdate(
+    req.params.id,
+    req.body,
+    {
+      new: true,
+      runValidators: true,
+    }
+  );
+
+  res.status(200).json({
+    data: {
+      updatedProfile,
+    },
+  });
+});

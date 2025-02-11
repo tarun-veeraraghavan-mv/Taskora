@@ -50,7 +50,7 @@ function Header() {
           <StyledNavLink to="home">Home</StyledNavLink>
         </Li>
         <Li>
-          <StyledNavLink to="course">Course planner</StyledNavLink>
+          <StyledNavLink to="course">🧮 Course planner</StyledNavLink>
         </Li>
         <Li>
           <StyledNavLink to="todo">Todo tracker</StyledNavLink>

@@ -1,8 +1,23 @@
 import { useRef } from "react";
-import { Button, Form, Input, Label, Select } from "../../components/Form";
+import { useNavigate } from "react-router-dom";
+import styled from "styled-components";
 import { StyledFlex } from "../../components/Flex";
+import { Button, Form, Input, Label, Select } from "../../components/Form";
+import { StyledLink } from "../../components/StyledLink";
+import { useUser } from "../auth/useUser";
+import { useCreateCourse } from "./useCreateCourse";
 
-function AddCourseModal({ createCourse, user }) {
+const StyledCenterDiv = styled.div`
+  display: flex;
+  justify-content: center;
+`;
+
+function AddCourseModal() {
+  const { user, isLoading } = useUser();
+  const { createCourse, isCreating } = useCreateCourse();
+
+  const navigate = useNavigate();
+
   const formRef = useRef(null);
 
   function onSubmit(e) {
@@ -23,16 +38,24 @@ function AddCourseModal({ createCourse, user }) {
     console.log(finalData);
 
     createCourse(finalData);
+
+    navigate("/app/course");
   }
 
   if (formRef.current) {
     formRef.current.reset();
   }
 
+  if (isLoading) return <p>Loading...</p>;
+  if (isCreating) return <p>Loading...</p>;
+
   return (
-    <div>
-      <h2>Add new course now</h2>
+    <StyledCenterDiv>
       <Form onSubmit={onSubmit} ref={formRef}>
+        <StyledLink to="/app/course" color="blue">
+          &larr; Go back
+        </StyledLink>
+        <h2>Add new course now</h2>
         <div>
           <Label>Semester number</Label>
           <Input
@@ -57,6 +80,14 @@ function AddCourseModal({ createCourse, user }) {
             name="courseDesc"
           />
         </div>
+        <div>
+          <Label>Proffessor Name</Label>
+          <Input
+            type="text"
+            placeholder="Name of professor"
+            name="proffessorName"
+          />
+        </div>
         <StyledFlex>
           <div>
             <Label>Start date</Label>
@@ -65,6 +96,17 @@ function AddCourseModal({ createCourse, user }) {
           <div>
             <Label>End date</Label>
             <Input type="date" name="endDate" />
+          </div>
+        </StyledFlex>
+
+        <StyledFlex>
+          <div>
+            <Label>Start time</Label>
+            <Input type="time" name="startTime" />
+          </div>
+          <div>
+            <Label>End time</Label>
+            <Input type="time" name="endTime" />
           </div>
         </StyledFlex>
 
@@ -87,6 +129,18 @@ function AddCourseModal({ createCourse, user }) {
           />
         </div>
         <div>
+          <Label>Difficulty</Label>
+          <Select name="difficulty">
+            <option>Easy</option>
+            <option>Medium</option>
+            <option>Difficulty</option>
+          </Select>
+        </div>
+        <div>
+          <Label>Important Links (sepearate them by &quot;|&quot;)</Label>
+          <Input type="input" name="links" placeholder="link1 | link2 | link3 ..."/>
+        </div>
+        <div>
           <Label>Label Color</Label>
           <Select name="semesterColor">
             <option value="#5EEAD4">Green</option>
@@ -97,8 +151,14 @@ function AddCourseModal({ createCourse, user }) {
           <Button>Create new course</Button>
         </div>
       </Form>
-    </div>
+    </StyledCenterDiv>
   );
 }
 
 export default AddCourseModal;
+
+// onBlur={e => handleUpdate(e,namOfField)}
+// handleUpdate(e) {
+// const {value} = e.target
+// 
+// })

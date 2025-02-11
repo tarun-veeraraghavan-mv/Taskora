@@ -6,8 +6,8 @@ export function useSignin() {
   const navigate = useNavigate();
 
   const { mutate: signin, isLoading: isSigningIn } = useMutation({
-    mutationFn: ({ name, avatar, email, password }) => {
-      signinApi(name, avatar, email, password);
+    mutationFn: async ({ name, avatar, email, password }) => {
+      return await signinApi(name, avatar, email, password);
     },
     onSuccess: () => {
       navigate("/profile");

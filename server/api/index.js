@@ -8,6 +8,8 @@ import { globalErrorHandler } from "../controller/globalErrorHandler.js";
 import authRouter from "../routes/authRouter.js";
 import profileRouter from "../routes/profileRoute.js";
 import courseRouter from "../routes/courseRouter.js";
+import userRouter from "../routes/userRoute.js";
+import todoRouter from "../routes/todoRouter.js";
 
 mongoose
   .connect(
@@ -35,6 +37,8 @@ app.get("/", (req, res) => {
 app.use("/api/v1/users", authRouter);
 app.use("/api/v1/profile", profileRouter);
 app.use("/api/v1/course", courseRouter);
+app.use("/api/v1/user", userRouter);
+app.use("/api/v1/todo", todoRouter);
 
 app.use(globalErrorHandler);
 

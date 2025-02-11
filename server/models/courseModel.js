@@ -13,6 +13,10 @@ const courseSchema = new mongoose.Schema({
     type: String,
     required: [true, "A semester must have a course title"],
   },
+  proffessorName: {
+    type: String,
+    required: [true, "A semester must have a proffessor"],
+  },
   courseDesc: {
     type: String,
     required: [true, "A semester must have a course description"],
@@ -25,12 +29,27 @@ const courseSchema = new mongoose.Schema({
     type: Date,
     required: [true, "A course must have an end date"],
   },
+  startTime: {
+    type: String,
+    required: [true, "A course must have a starting time"],
+  },
+  endTime: {
+    type: String,
+    required: [true, "A course must have an ending time"],
+  },
   progress: {
     type: String,
     required: [true, "A course must have a progress"],
   },
   grade: {
     type: Number,
+  },
+  difficulty: {
+    type: String,
+    required: [true, "A course must have a difficulty"],
+  },
+  links: {
+    type: String,
   },
   semesterColor: {
     type: String,

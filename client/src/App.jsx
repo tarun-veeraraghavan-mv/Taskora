@@ -12,6 +12,9 @@ import AppLayout from "./components/AppLayout";
 import ProfileForm from "./features/profile/ProfileForm";
 import Profile from "./features/profile/Profile";
 import Course from "./features/courses/Course";
+import AddCourseModal from "./features/courses/AddCourseModal";
+import UpdateCourseModal from "./features/courses/UpdateCourseList";
+import TodoTracker from "./pages/TodoTracker";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -42,6 +45,9 @@ function App() {
               <Route path="home" element={<Home />} />
               <Route path="me" element={<Profile />} />
               <Route path="course" element={<Course />} />
+              <Route path="course-add" element={<AddCourseModal />} />
+              <Route path="course-update/:id" element={<UpdateCourseModal />} />
+              <Route path="todo" element={<TodoTracker />} />
             </Route>
           </Route>
         </Routes>
