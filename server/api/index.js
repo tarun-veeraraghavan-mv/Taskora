@@ -3,10 +3,13 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 dotenv.config({ path: "../../server/api/config.env" });
 import cors from "cors";
+
+// SECURITY
 import rateLimit from "express-rate-limit";
 import helmet from "helmet";
 import mongoSanitize from "express-mongo-sanitize";
 import xss from "xss-clean";
+import hpp from "hpp";
 
 import { globalErrorHandler } from "../controller/globalErrorHandler.js";
 import authRouter from "../routes/authRouter.js";
@@ -27,6 +30,7 @@ const app = express();
 app.use(express.json());
 app.use(cors({ origin: "http://localhost:5173" }));
 
+// Rate limiting, http-headers, data sanitization and NoSQL query ijection, cross site scripting, paramter pollution
 const limiter = rateLimit({
   max: 100,
   windowMs: 1000 * 60 * 60,
@@ -36,6 +40,7 @@ app.use("/api", limiter);
 app.use(helmet());
 app.use(mongoSanitize());
 app.use(xss());
+app.use(hpp());
 
 app.use((req, res, next) => {
   console.log(req.headers);
