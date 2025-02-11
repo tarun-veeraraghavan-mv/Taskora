@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 dotenv.config({ path: "../../server/api/config.env" });
 import cors from "cors";
+import rateLimit from "express-rate-limit";
 
 import { globalErrorHandler } from "../controller/globalErrorHandler.js";
 import authRouter from "../routes/authRouter.js";
@@ -22,6 +23,12 @@ mongoose
 const app = express();
 app.use(express.json());
 app.use(cors({ origin: "http://localhost:5173" }));
+
+const limiter = rateLimit({
+  max: 100,
+  windowMs: 1000 * 60 * 60,
+  message: "Too many requests from this IP, please try again",
+});
 
 app.use((req, res, next) => {
   console.log(req.headers);
