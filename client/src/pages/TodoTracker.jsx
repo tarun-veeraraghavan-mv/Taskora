@@ -61,6 +61,16 @@ function TodoTracker() {
     createTodo(data);
   }
 
+  if (error) {
+    alert(error.message);
+  }
+  if (todoError) {
+    alert(todoError.message);
+  }
+  if (getCourseError) {
+    alert(getCourseError.message);
+  }
+
   if (isGetCourses || isLoading || isFetchingTodos) return <p>Loading...</p>;
 
   if (isCreatingTodo) return <p>Loading...</p>;

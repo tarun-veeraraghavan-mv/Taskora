@@ -56,6 +56,9 @@ function Header() {
           <StyledNavLink to="todo">Todo tracker</StyledNavLink>
         </Li>
         <Li>
+          <StyledNavLink to="accomplishments">Accomplishments</StyledNavLink>
+        </Li>
+        <Li>
           <StyledNavLink to="me">Your profile</StyledNavLink>
         </Li>
       </StyledNav>

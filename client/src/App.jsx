@@ -15,6 +15,7 @@ import Course from "./features/courses/Course";
 import AddCourseModal from "./features/courses/AddCourseModal";
 import UpdateCourseModal from "./features/courses/UpdateCourseList";
 import TodoTracker from "./pages/TodoTracker";
+import Accomplishments from "./pages/Accomplishments";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -48,6 +49,7 @@ function App() {
               <Route path="course-add" element={<AddCourseModal />} />
               <Route path="course-update/:id" element={<UpdateCourseModal />} />
               <Route path="todo" element={<TodoTracker />} />
+              <Route path="accomplishments" element={<Accomplishments />} />
             </Route>
           </Route>
         </Routes>
