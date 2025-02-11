@@ -34,5 +34,14 @@ export const deleteTodo = catchAsync(async (req, res) => {
 });
 
 export const markTodoCompleted = catchAsync(async (req, res) => {
-  const completedTodo = await Todo.findByIdAndUpdate(req.params.id, req.body);
+  const completedTodo = await Todo.findByIdAndUpdate(req.params.id, req.body, {
+    new: true,
+    runValidators: true,
+  });
+
+  res.status(200).json({
+    data: {
+      completedTodo,
+    },
+  });
 });

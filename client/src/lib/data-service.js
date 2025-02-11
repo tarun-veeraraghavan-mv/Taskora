@@ -245,3 +245,23 @@ export async function deleteTodo(id) {
     }
   }
 }
+
+export async function markTodoCompleted(id) {
+  console.log(id);
+
+  try {
+    const completedTodo = await axios.patch(
+      `http://127.0.0.1:3000/api/v1/todo/${id}`,
+      {
+        completed: true,
+      }
+    );
+
+    return completedTodo.data.data.completedTodo;
+  } catch (e) {
+    console.log(e);
+    if (e?.response?.data?.message) {
+      alert(e?.response?.data?.message);
+    }
+  }
+}

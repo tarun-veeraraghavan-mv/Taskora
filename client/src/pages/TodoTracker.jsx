@@ -6,6 +6,7 @@ import { useTodos } from "../features/tracker/useTodos";
 import { useCreateTodo } from "../features/tracker/useCreateTodo";
 import { useDeleteTodo } from "../features/tracker/useDeleteTodo";
 import { formatDate } from "../util/helpers/formatDate";
+import { useMarkcompleted } from "../features/tracker/useMarkcompleted";
 
 const CenterDiv = styled.div`
   max-width: 1200px;
@@ -47,6 +48,7 @@ function TodoTracker() {
   const { courses, isGetCourses, getCourseError } = useCourses(user?._id);
   const { createTodo, isCreatingTodo } = useCreateTodo();
   const { deletedTodo, isDeletingTodo } = useDeleteTodo();
+  const { markCompleted, isMarkingComplete } = useMarkcompleted();
 
   function handleAddTodo(e) {
     e.preventDefault();
@@ -63,6 +65,7 @@ function TodoTracker() {
 
   if (isCreatingTodo) return <p>Loading...</p>;
   if (isDeletingTodo) return <p>Loading...</p>;
+  if (isMarkingComplete) return <p>Loading...</p>;
 
   return (
     <CenterDiv>
@@ -91,17 +94,23 @@ function TodoTracker() {
                   <Input type="text" name="remarks" />
                 </div>
               </div>
+
               <Button>Add a task</Button>
             </Form>
 
             <TaskList>
               {todos
-                ?.filter((todo) => todo?.courseId === course?._id)
+                ?.filter(
+                  (todo) => todo?.courseId === course?._id && !todo?.completed
+                )
                 .map((todo) => (
                   <TodoTask key={todo?._id}>
                     <p>{todo.name}</p>
                     <p>{formatDate(todo.dueDate)}</p>
                     <p>Remarks: {todo?.remarks}</p>
+                    <button onClick={() => markCompleted(todo?._id)}>
+                      Mark completed
+                    </button>
                     <button onClick={() => deletedTodo(todo?._id)}>
                       Delete
                     </button>
