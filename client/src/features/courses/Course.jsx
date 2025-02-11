@@ -14,9 +14,7 @@ const StyledCourseLayout = styled.div`
 
 function Course() {
   const { user, isLoading, error: userError } = useUser();
-
   const { deleteCourse, isDeleting } = useDeleteCourse();
-
   const { isGetCourses, courses } = useCourses(user?._id);
 
   if (userError) alert(userError);

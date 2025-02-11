@@ -156,9 +156,3 @@ function AddCourseModal() {
 }
 
 export default AddCourseModal;
-
-// onBlur={e => handleUpdate(e,namOfField)}
-// handleUpdate(e) {
-// const {value} = e.target
-// 
-// })

@@ -1,6 +1,5 @@
-import { useContext } from "react";
-import { UserContext } from "../contexts/UserContext";
-import { NavLink } from "react-router-dom";
+import React from "react";
+
 import { useUser } from "../features/auth/useUser";
 
 function Home() {
