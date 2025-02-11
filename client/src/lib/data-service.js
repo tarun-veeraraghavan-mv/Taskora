@@ -215,11 +215,29 @@ export async function getAllTodos() {
 }
 
 export async function createTodo(data) {
-  
   try {
     const newTodo = await axios.post("http://127.0.0.1:3000/api/v1/todo", data);
 
     return newTodo.data.data.newTodo;
+  } catch (e) {
+    console.log(e);
+    if (e?.response?.data?.message) {
+      alert(e?.response?.data?.message);
+    }
+  }
+}
+
+export async function deleteTodo(id) {
+  console.log(id);
+
+  try {
+    const deletedTodo = await axios.delete(
+      `http://127.0.0.1:3000/api/v1/todo/${id}`
+    );
+
+    console.log(deletedTodo);
+
+    return deletedTodo.data.data.deletedTodo;
   } catch (e) {
     console.log(e);
     if (e?.response?.data?.message) {

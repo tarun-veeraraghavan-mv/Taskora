@@ -4,6 +4,7 @@ import { useCourses } from "../features/courses/useCourses";
 import { Button, Form } from "../components/Form";
 import { useTodos } from "../features/tracker/useTodos";
 import { useCreateTodo } from "../features/tracker/useCreateTodo";
+import { useDeleteTodo } from "../features/tracker/useDeleteTodo";
 
 const CenterDiv = styled.div`
   max-width: 1200px;
@@ -12,10 +13,16 @@ const CenterDiv = styled.div`
   gap: 32px;
 `;
 
-const StyledTodoList = styled.ul`
+const TodoList = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
+`;
+
+const StyledTodoList = styled.ul`
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
   list-style: none;
+  gap: 10px;
 `;
 
 function TodoTracker() {
@@ -23,6 +30,7 @@ function TodoTracker() {
   const { todos, isFetchingTodos, todoError } = useTodos();
   const { courses, isGetCourses, getCourseError } = useCourses(user?._id);
   const { createTodo, isCreatingTodo } = useCreateTodo();
+  const { deletedTodo, isDeletingTodo } = useDeleteTodo();
 
   function handleAddTodo(e) {
     e.preventDefault();
@@ -38,6 +46,7 @@ function TodoTracker() {
   if (isGetCourses || isLoading || isFetchingTodos) return <p>Loading...</p>;
 
   if (isCreatingTodo) return <p>Loading...</p>;
+  if (isDeletingTodo) return <p>Loading...</p>;
 
   return (
     <CenterDiv>
@@ -54,7 +63,9 @@ function TodoTracker() {
                 .map((todo) => (
                   <li key={todo?._id}>
                     <p>{todo.name}</p>
-                    <button>Delete</button>
+                    <button onClick={() => deletedTodo(todo?._id)}>
+                      Delete
+                    </button>
                   </li>
                 ))}
             </ul>

@@ -26,7 +26,7 @@ export const getTodos = catchAsync(async (req, res) => {
 export const deleteTodo = catchAsync(async (req, res) => {
   const deletedTodo = await Todo.findByIdAndDelete(req.params.id);
 
-  res.status(204).json({
+  res.status(200).json({
     data: {
       deletedTodo,
     },
