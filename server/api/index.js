@@ -50,6 +50,12 @@ app.get("/", (req, res) => {
   });
 });
 
+app.get("/api/test", (req, res) => {
+  res.status(200).json({
+    message: "This /api endpoint works!!",
+  });
+});
+
 app.use("/api/v1/users", authRouter);
 app.use("/api/v1/profile", profileRouter);
 app.use("/api/v1/course", courseRouter);
