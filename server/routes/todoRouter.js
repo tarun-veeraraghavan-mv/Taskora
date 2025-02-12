@@ -5,11 +5,12 @@ import {
   getTodos,
   markTodoCompleted,
 } from "../controller/todoController.js";
+import { protect } from "../controller/authController.js";
 
 const router = express.Router();
 
-router.route("/").post(createTodo).get(getTodos);
+router.route("/").post(protect, createTodo).get(getTodos);
 
-router.route("/:id").delete(deleteTodo).patch(markTodoCompleted);
+router.route("/:id").delete(protect, deleteTodo).patch(markTodoCompleted);
 
 export default router;

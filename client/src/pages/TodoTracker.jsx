@@ -9,13 +9,6 @@ import { formatDate } from "../util/helpers/formatDate";
 import { useMarkcompleted } from "../features/tracker/useMarkcompleted";
 import LoaderScreen from "../components/LoaderScreen";
 
-const CenterDiv = styled.div`
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 10px 20px;
-  gap: 32px;
-`;
-
 const TodoHeader = styled.div`
   padding: 10px;
 
@@ -79,7 +72,7 @@ function TodoTracker() {
   if (isMarkingComplete) return <LoaderScreen />;
 
   return (
-    <CenterDiv>
+    <div>
       <h2>Plan your goals and make it happen!</h2>
       <StyledTodoList>
         {courses?.map((course) => (
@@ -131,7 +124,7 @@ function TodoTracker() {
           </li>
         ))}
       </StyledTodoList>
-    </CenterDiv>
+    </div>
   );
 }
 

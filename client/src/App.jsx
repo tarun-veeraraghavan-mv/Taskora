@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import Signin from "./features/auth/Signin";
 import Home from "./components/Home";
 import Login from "./features/auth/Login";
@@ -18,6 +18,8 @@ import UpdateCourseModal from "./features/courses/UpdateCourseList";
 import TodoTracker from "./pages/TodoTracker";
 import Accomplishments from "./pages/Accomplishments";
 import CourseDetails from "./features/courses/CourseDetails";
+import TodoLayout from "./features/tracker/TodoLayout";
+import GoalTracker from "./features/tracker/GoalTracker";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -28,6 +30,8 @@ const queryClient = new QueryClient({
 });
 
 function App() {
+  // console.log(process.env.API_URL);
+
   return (
     <QueryClientProvider client={queryClient}>
       <ReactQueryDevtools initialIsOpen={false} />
@@ -69,7 +73,11 @@ function App() {
               <Route path="course/:courseId" element={<CourseDetails />} />
               <Route path="course-add" element={<AddCourseModal />} />
               <Route path="course-update/:id" element={<UpdateCourseModal />} />
-              <Route path="todo" element={<TodoTracker />} />
+              <Route path="todo" element={<TodoLayout />}>
+                <Route index element={<Navigate replace to="course" />} />
+                <Route path="course" element={<TodoTracker />} />
+                <Route path="goals" element={<GoalTracker />} />
+              </Route>
               <Route path="accomplishments" element={<Accomplishments />} />
             </Route>
           </Route>

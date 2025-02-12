@@ -1,7 +1,8 @@
 import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
-dotenv.config({ path: "../../server/api/config.env" });
+// dotenv.config({ path: "../api/config.env" });
+dotenv.config({ path: "./config.env" });
 import cors from "cors";
 
 // SECURITY
@@ -18,13 +19,9 @@ import courseRouter from "../routes/courseRouter.js";
 import userRouter from "../routes/userRoute.js";
 import todoRouter from "../routes/todoRouter.js";
 
-mongoose
-  .connect(
-    "mongodb+srv://tarunv1911:mDiSJXOLvsotPsc9@cluster0.vqm1a.mongodb.net/myDB?retryWrites=true&w=majority&appName=Cluster0"
-  )
-  .then(() => {
-    console.log("DB successfully connected");
-  });
+mongoose.connect(process.env.DATABASE).then(() => {
+  console.log("DB successfully connected");
+});
 
 const app = express();
 app.use(express.json());
@@ -61,7 +58,8 @@ app.use("/api/v1/todo", todoRouter);
 
 app.use(globalErrorHandler);
 
-const port = 3000;
+const port = process.env.PORT;
 app.listen(port, () => {
   console.log(`App is running on port ${port}`);
 });
+console.log(process.env.PORT);

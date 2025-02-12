@@ -1,6 +1,5 @@
-import React from "react";
-
 import { useUser } from "../features/auth/useUser";
+import CalendarView from "../features/home/CalendarView";
 import LoaderScreen from "./LoaderScreen";
 
 function Home() {
@@ -16,6 +15,7 @@ function Home() {
     <div>
       <h1>Your user</h1>
       <p>{user.name}</p>
+      <CalendarView />
     </div>
   );
 }

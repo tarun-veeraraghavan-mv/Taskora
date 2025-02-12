@@ -5,6 +5,7 @@ import { useState } from "react";
 import { Label, Input, Form, Button } from "../../components/Form";
 import { useUpdateUser } from "./useUpdateUser";
 import { useUpdateProfile } from "./useUpdateProfile";
+import LoaderScreen from "../../components/LoaderScreen";
 
 const StyledProfileImage = styled.img`
   height: 100px;
@@ -69,11 +70,11 @@ function Profile() {
     updateProfile({ id: profile?._id, data: finalData });
   }
 
-  if (isLoading || isProfiling) return <p>Loading...</p>;
+  if (isLoading || isProfiling) return <LoaderScreen />;
 
-  if (isUpdating) return <p>Loading...</p>;
+  if (isUpdating) return <LoaderScreen />;
 
-  if (isUpdatingProfile) return <p>Loading...</p>;
+  if (isUpdatingProfile) return <LoaderScreen />;
 
   if (error || profileError) alert(error);
 
