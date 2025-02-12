@@ -6,6 +6,7 @@ import { Button, Form, Input, Label, Select } from "../../components/Form";
 import { StyledLink } from "../../components/StyledLink";
 import { useUser } from "../auth/useUser";
 import { useCreateCourse } from "./useCreateCourse";
+import LoaderScreen from "../../components/LoaderScreen";
 
 const StyledCenterDiv = styled.div`
   display: flex;
@@ -46,8 +47,8 @@ function AddCourseModal() {
     formRef.current.reset();
   }
 
-  if (isLoading) return <p>Loading...</p>;
-  if (isCreating) return <p>Loading...</p>;
+  if (isLoading) return <LoaderScreen />;
+  if (isCreating) return <LoaderScreen />;
 
   return (
     <StyledCenterDiv>
@@ -119,7 +120,7 @@ function AddCourseModal() {
           </Select>
         </div>
         <div>
-          <Label>Grade</Label>
+          <Label>Grade (if course hasnt started type 0)</Label>
           <Input
             type="number"
             placeholder="4.56"
@@ -138,7 +139,11 @@ function AddCourseModal() {
         </div>
         <div>
           <Label>Important Links (sepearate them by &quot;|&quot;)</Label>
-          <Input type="input" name="links" placeholder="link1 | link2 | link3 ..."/>
+          <Input
+            type="input"
+            name="links"
+            placeholder="link1 | link2 | link3 ..."
+          />
         </div>
         <div>
           <Label>Label Color</Label>

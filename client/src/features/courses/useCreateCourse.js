@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createCourse as createCourseApi } from "../../lib/data-service";
+import toast from "react-hot-toast";
 
 export function useCreateCourse() {
   const query = useQueryClient();
@@ -13,13 +14,14 @@ export function useCreateCourse() {
       createCourseApi(formData);
     },
     onSuccess: () => {
-      alert("Course created");
       query.invalidateQueries({
         queryKey: ["courses"],
       });
+      toast.success("Course successfully created");
     },
     onError: (error) => {
       alert(error);
+      toast.error(error.message);
     },
   });
 

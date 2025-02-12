@@ -1,4 +1,5 @@
 import { Button, Form, Input, Label, Select } from "../../components/Form";
+import LoaderScreen from "../../components/LoaderScreen";
 import { useUser } from "../auth/useUser";
 import { useCreateProfile } from "./useCreateProfile";
 
@@ -29,6 +30,7 @@ function ProfileForm() {
   }
 
   if (isCreating) return <p>Loading...</p>;
+  if (isLoading) return <LoaderScreen />;
 
   if (error) alert(error);
 

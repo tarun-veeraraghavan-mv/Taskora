@@ -32,7 +32,7 @@ app.use(cors({ origin: "http://localhost:5173" }));
 
 // Rate limiting, http-headers, data sanitization and NoSQL query ijection, cross site scripting, paramter pollution
 const limiter = rateLimit({
-  max: 100,
+  max: 10000,
   windowMs: 1000 * 60 * 60,
   message: "Too many requests from this IP, please try again",
 });

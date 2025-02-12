@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { updateUser as updateUserApi } from "../../lib/data-service";
+import toast from "react-hot-toast";
 
 export function useUpdateUser() {
   const queryClient = useQueryClient();
@@ -22,10 +23,10 @@ export function useUpdateUser() {
       if (context?.previousUser) {
         queryClient.setQueryData(["user"], context.previousUser);
       }
-      alert(err.message);
+      toast.error(err.message);
     },
     onSuccess: () => {
-      alert("User successfully updated");
+      toast.success("User successfully updated");
     },
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ["user"] });

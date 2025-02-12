@@ -7,6 +7,7 @@ import { useCreateTodo } from "../features/tracker/useCreateTodo";
 import { useDeleteTodo } from "../features/tracker/useDeleteTodo";
 import { formatDate } from "../util/helpers/formatDate";
 import { useMarkcompleted } from "../features/tracker/useMarkcompleted";
+import LoaderScreen from "../components/LoaderScreen";
 
 const CenterDiv = styled.div`
   max-width: 1200px;
@@ -71,11 +72,11 @@ function TodoTracker() {
     alert(getCourseError.message);
   }
 
-  if (isGetCourses || isLoading || isFetchingTodos) return <p>Loading...</p>;
+  if (isGetCourses || isLoading || isFetchingTodos) return <LoaderScreen />;
 
-  if (isCreatingTodo) return <p>Loading...</p>;
-  if (isDeletingTodo) return <p>Loading...</p>;
-  if (isMarkingComplete) return <p>Loading...</p>;
+  if (isCreatingTodo) return <LoaderScreen />;
+  if (isDeletingTodo) return <LoaderScreen />;
+  if (isMarkingComplete) return <LoaderScreen />;
 
   return (
     <CenterDiv>

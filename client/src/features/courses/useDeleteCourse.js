@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { deleteCourse as deleteCourseApi } from "../../lib/data-service";
+import toast from "react-hot-toast";
 
 export function useDeleteCourse() {
   const queryClient = useQueryClient();
@@ -10,13 +11,13 @@ export function useDeleteCourse() {
       deleteCourseApi(courseId);
     },
     onSuccess: () => {
-      alert("COurse deleted");
+      toast.success("Course deleted");
       queryClient.invalidateQueries({
         queryKey: ["courses"],
       });
     },
     onError: (error) => {
-      alert(error);
+      toast.error(error);
     },
   });
 

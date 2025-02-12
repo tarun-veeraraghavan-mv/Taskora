@@ -1,11 +1,12 @@
 import React from "react";
 
 import { useUser } from "../features/auth/useUser";
+import LoaderScreen from "./LoaderScreen";
 
 function Home() {
   const { user, isLoading, error } = useUser();
 
-  if (isLoading) return <p>Loading...</p>;
+  if (isLoading) return <LoaderScreen />;
 
   if (error) alert(error);
 

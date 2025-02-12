@@ -1,6 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
 import { signin as signinApi } from "../../lib/data-service";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 export function useSignin() {
   const navigate = useNavigate();
@@ -11,9 +12,11 @@ export function useSignin() {
     },
     onSuccess: () => {
       navigate("/profile");
+      toast.success("Account creeation successful! Create your profile");
     },
     onError: (error) => {
       alert(error);
+      toast.error(error.message);
     },
   });
 

@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { deleteTodo as deleteTodoApi } from "../../lib/data-service";
+import toast from "react-hot-toast";
 
 export function useDeleteTodo() {
   const queryClient = useQueryClient();
@@ -7,10 +8,13 @@ export function useDeleteTodo() {
   const { mutate: deletedTodo, isLoading: isDeletingTodo } = useMutation({
     mutationFn: (id) => deleteTodoApi(id),
     onSuccess: () => {
-      alert("Todo successfully deleted");
+      toast.success("Todo successfully deleted");
       queryClient.invalidateQueries({
         queryKey: ["todos"],
       });
+    },
+    onError: (err) => {
+      toast.error(err.message);
     },
   });
 
