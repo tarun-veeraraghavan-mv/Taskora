@@ -28,12 +28,12 @@ app.use(express.json());
 app.use(cors({ origin: "http://localhost:5173" }));
 
 // Rate limiting, http-headers, data sanitization and NoSQL query ijection, cross site scripting, paramter pollution
-const limiter = rateLimit({
-  max: 10000,
-  windowMs: 1000 * 60 * 60,
-  message: "Too many requests from this IP, please try again",
-});
-app.use("/api", limiter);
+// const limiter = rateLimit({
+//   max: 10000,
+//   windowMs: 1000 * 60 * 60,
+//   message: "Too many requests from this IP, please try again",
+// });
+// app.use("/api", limiter);
 app.use(helmet());
 app.use(mongoSanitize());
 app.use(xss());
